@@ -1,0 +1,22 @@
+# Sources for recipe 0.27: the archive.org addresses players download from, and where the vetted copies sit
+# inside the lab containers (ds_quarantine at /q, the extracted 0.27 zips in the dsr_work volume at /work).
+
+[[source]]
+id = "installer"
+url = "https://archive.org/download/Dragon-Soul-DragonSoul-MMORPG-Client/Dragon%20Soul%20(DragonSoul)%20MMORPG%20Game%20Files/CLIENTS/Download%20from%20software.informer.com/dragonsoul_setup.exe"
+file = "/q/dl/CLIENTS/Download from software.informer.com/dragonsoul_setup.exe"
+kind = "inno"
+
+[[source]]
+id = "tr027"
+url = "https://archive.org/download/Dragon-Soul-DragonSoul-MMORPG-Client/Dragon%20Soul%20(DragonSoul)%20MMORPG%20Game%20Files/OTHER%20FILES/setup%20builds.zip/setup%20builds%2F0.27-Translation.zip"
+file = "/work/0.27-Translation.zip"
+kind = "zip"
+overlay_prefix = "0.27-Translation/client/"
+
+[[source]]
+id = "bp027"
+url = "https://archive.org/download/Dragon-Soul-DragonSoul-MMORPG-Client/Dragon%20Soul%20(DragonSoul)%20MMORPG%20Game%20Files/OTHER%20FILES/setup%20builds.zip/setup%20builds%2F0.27-basepatch.zip"
+file = "/work/0.27-basepatch.zip"
+kind = "zip"
+overlay_prefix = "0.27-basepatch/"

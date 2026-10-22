@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dragon Soul Reborn</title>
+  </head>
+  <body>
+    <div id="titlebar" data-tauri-drag-region>
+      <span class="tb-name" data-tauri-drag-region>Dragon Soul Reborn</span>
+      <button id="tb-min" title="Minimize">&#x2013;</button>
+      <button id="tb-close" title="Close">&#x2715;</button>
+    </div>
+    <main>
+      <header>
+        <div class="brand">
+          <div class="title">DRAGON SOUL</div>
+          <div class="subtitle">REBORN</div>
+        </div>
+        <div id="server" class="server unknown">● Checking server…</div>
+      </header>
+
+      <section id="message" class="message" hidden></section>
+
+      <section id="install" class="panel" hidden>
+        <h2>Install Dragon Soul</h2>
+        <p class="hint">The game (about 800 MB) is downloaded from archive.org, checked file by file, and set up in this folder.</p>
+        <label for="install-folder">Game folder</label>
+        <div class="row">
+          <input id="install-folder" type="text" spellcheck="false" />
+          <button id="install-browse" class="ghost">Browse…</button>
+        </div>
+        <div id="install-space" class="hint"></div>
+        <div class="row">
+          <button id="install-copy" class="link">Use an installer I already have</button>
+          <span id="install-copy-name" class="hint"></span>
+        </div>
+        <div id="install-prompt" class="prompt" hidden>
+          <p>This folder already has other files in it. Install into <b id="install-sub"></b> instead?</p>
+          <div class="row">
+            <button id="install-sub-yes" class="ghost">Use that folder</button>
+            <button id="install-here" class="link">Install here anyway</button>
+          </div>
+        </div>
+      </section>
+
+      <section id="settings" class="panel" hidden>
+        <h2>Settings</h2>
+        <label for="set-res">Display</label>
+        <div class="row">
+          <select id="set-res"></select>
+          <label class="inline"><input type="radio" name="mode" id="set-full" /> Fullscreen</label>
+          <label class="inline"><input type="radio" name="mode" id="set-window" /> Window</label>
+        </div>
+        <label for="set-folder">Game folder</label>
+        <div class="row">
+          <input id="set-folder" type="text" readonly />
+          <button id="set-folder-change" class="ghost">Change…</button>
+        </div>
+        <div class="row">
+          <button id="set-repair" class="ghost">Repair game files</button>
+          <button id="set-logs" class="link">Open log folder</button>
+        </div>
+        <details>
+          <summary>Advanced</summary>
+          <label for="set-server">Server address (leave blank for the official server)</label>
+          <input id="set-server" type="text" placeholder="address:port" spellcheck="false" />
+        </details>
+        <div id="set-error" class="hint error" hidden></div>
+        <div class="row end">
+          <button id="set-cancel" class="link">Cancel</button>
+          <button id="set-save" class="ghost">Save</button>
+        </div>
+      </section>
+
+      <footer>
+        <div class="progress-area">
+          <div id="status-text" class="status-text">Starting…</div>
+          <div id="bar" class="bar"><div id="bar-fill"></div></div>
+        </div>
+        <button id="settings-btn" class="ghost">⚙ Settings</button>
+        <button id="action-btn" class="play" disabled>PLAY</button>
+      </footer>
+    </main>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>

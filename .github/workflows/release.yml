@@ -1,0 +1,67 @@
+name: Release
+
+on:
+  push:
+    tags: ["v*"]
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Only release a commit already on production
+        shell: pwsh
+        run: |
+          git merge-base --is-ancestor HEAD origin/main
+          if ($LASTEXITCODE -ne 0) { throw 'Release tags must point to a production commit.' }
+      - uses: dtolnay/rust-toolchain@stable
+      - uses: Swatinem/rust-cache@v2
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+          cache-dependency-path: launcher/pnpm-lock.yaml
+      - run: ./scripts/fetch-innoextract.ps1
+        shell: pwsh
+      - run: pnpm install --frozen-lockfile
+        working-directory: launcher
+      - name: Build, sign and draft the release
+        uses: tauri-apps/tauri-action@v0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          TAURI_SIGNING_PRIVATE_KEY: ${{ secrets.TAURI_SIGNING_PRIVATE_KEY }}
+          TAURI_SIGNING_PRIVATE_KEY_PASSWORD: ${{ secrets.TAURI_SIGNING_PRIVATE_KEY_PASSWORD }}
+        with:
+          projectPath: launcher
+          tagName: ${{ github.ref_name }}
+          releaseName: Dragon Soul Reborn ${{ github.ref_name }}
+          releaseBody: "Download the setup file below. Windows will say the publisher is unknown: choose More info, then Run anyway."
+          releaseDraft: true
+          includeUpdaterJson: true
+      - name: Check the update signature against the launcher's key
+        shell: pwsh
+        run: |
+          $pub = (Get-Content launcher/src-tauri/tauri.conf.json -Raw | ConvertFrom-Json).plugins.updater.pubkey
+          $exe = Get-ChildItem target/release/bundle/nsis/*-setup.exe | Select-Object -First 1
+          cargo run --release -p recipe-tool -- sig-verify --pubkey $pub --file $exe.FullName --sig "$($exe.FullName).sig"
+          if ($LASTEXITCODE -ne 0) { exit 1 }
+      - name: VirusTotal
+        shell: pwsh
+        env:
+          VT_API_KEY: ${{ secrets.VT_API_KEY }}
+        run: |
+          $exe = Get-ChildItem target/release/bundle/nsis/*-setup.exe | Select-Object -First 1
+          node scripts/virustotal-check.mjs $exe.FullName
+          if ($LASTEXITCODE -ne 0) { exit 1 }
+      - name: Publish the release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: gh release edit ${{ github.ref_name }} --draft=false
