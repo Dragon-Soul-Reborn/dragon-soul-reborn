@@ -10,4 +10,3 @@ Authenticate public repository writes through the Dragon Soul Reborn GitHub App 
 Never add original game files, account data, private keys, passwords or private filesystem paths. All test fixtures must be synthetic. The installer is read with innoextract and is never executed by the launcher.
 
 Run targeted tests while editing, then `cargo fmt --all --check`, `cargo clippy --workspace --all-targets -- -D warnings`, `cargo test --workspace`, `pnpm -C launcher test`, and `pnpm -C launcher build` before review.
-
