@@ -1,0 +1,12 @@
+* text=auto eol=lf
+*.ps1 text eol=crlf
+*.nsh text eol=crlf
+*.iss text eol=crlf
+*.bin binary
+*.aup binary
+*.exe binary
+*.zip binary
+*.png binary
+*.ico binary
+*.icns binary
+core/tests/fixtures/sig/* -text

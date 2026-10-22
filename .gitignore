@@ -1,0 +1,13 @@
+/target
+node_modules/
+launcher/dist/
+launcher/src-tauri/binaries/
+launcher/src-tauri/gen/
+*.part
+.reborn/
+
+*.key
+*.key.pub
+.env
+.env.*
+!.env.example
