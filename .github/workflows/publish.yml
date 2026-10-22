@@ -1,0 +1,55 @@
+name: Publish feed
+
+on:
+  push:
+    branches: [main]
+    paths: ["publish/**", ".github/workflows/publish.yml"]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deploy.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+      - uses: Swatinem/rust-cache@v2
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Validate
+        run: cargo run --release -p recipe-tool -- check-feed --dir publish
+      - name: Stamp
+        run: node scripts/stamp-issued.mjs publish/server-info.json
+      - name: Sign
+        env:
+          TAURI_SIGNING_PRIVATE_KEY: ${{ secrets.TAURI_SIGNING_PRIVATE_KEY }}
+          TAURI_SIGNING_PRIVATE_KEY_PASSWORD: ${{ secrets.TAURI_SIGNING_PRIVATE_KEY_PASSWORD }}
+        run: |
+          for f in publish/server-info.json publish/recipes/*.json; do
+            npx --yes @tauri-apps/cli@2 signer sign -k "$TAURI_SIGNING_PRIVATE_KEY" -p "$TAURI_SIGNING_PRIVATE_KEY_PASSWORD" "$f"
+          done
+      - name: Check the signatures against the launcher's key
+        run: |
+          PUB=$(node -p "require('./launcher/src-tauri/tauri.conf.json').plugins.updater.pubkey")
+          for f in publish/server-info.json publish/recipes/*.json; do
+            cargo run --release -p recipe-tool -- sig-verify --pubkey "$PUB" --file "$f" --sig "$f.sig"
+          done
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: publish
+      - id: deploy
+        uses: actions/deploy-pages@v4

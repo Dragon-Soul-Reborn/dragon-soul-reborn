@@ -1,0 +1,81 @@
+name: CI
+
+on:
+  push:
+    branches: [staging, main]
+  pull_request:
+
+jobs:
+  test:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          components: rustfmt, clippy
+      - uses: Swatinem/rust-cache@v2
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+          cache-dependency-path: launcher/pnpm-lock.yaml
+      - name: Fetch innoextract
+        shell: pwsh
+        run: |
+          ./scripts/fetch-innoextract.ps1
+          "DSR_INNOEXTRACT=$PWD\launcher\src-tauri\binaries\innoextract-x86_64-pc-windows-msvc.exe" >> $env:GITHUB_ENV
+      - name: Build the Inno Setup test fixture
+        shell: pwsh
+        run: |
+          Invoke-WebRequest https://files.jrsoftware.org/is/5/innosetup-5.6.1-unicode.exe -OutFile "$env:RUNNER_TEMP\is5.exe"
+          if ((Get-FileHash "$env:RUNNER_TEMP\is5.exe" -Algorithm SHA256).Hash -ne '27d49e9bc769e9d1b214c153011978db90dc01c2acd1ddcd9ed7b3fe3b96b538') { throw 'Inno Setup compiler checksum mismatch' }
+          & $env:DSR_INNOEXTRACT --silent --extract --output-dir "$env:RUNNER_TEMP\is5" "$env:RUNNER_TEMP\is5.exe"
+          if ($LASTEXITCODE -ne 0) { exit 1 }
+          & "$env:RUNNER_TEMP\is5\app\ISCC.exe" "/O$env:RUNNER_TEMP" core\tests\fixtures\e2e\fixture.iss
+          if ($LASTEXITCODE -ne 0) { exit 1 }
+          "DSR_E2E_INSTALLER=$env:RUNNER_TEMP\fixture_setup.exe" >> $env:GITHUB_ENV
+      - run: pnpm install --frozen-lockfile
+        working-directory: launcher
+      - run: pnpm build
+        working-directory: launcher
+      - run: pnpm test
+        working-directory: launcher
+      - run: cargo fmt --all --check
+      - run: cargo clippy --workspace --all-targets -- -D warnings
+      - run: cargo test --workspace
+      - name: The e2e test must have run, not skipped
+        shell: pwsh
+        run: |
+          $out = cargo test -p dsr-core --test e2e_inno -- --nocapture 2>&1 | Out-String
+          if ($LASTEXITCODE -ne 0) { Write-Error $out; exit 1 }
+          if ($out -match 'skipped:') { Write-Error "e2e_inno skipped in CI"; exit 1 }
+
+  test-launcher:
+    if: github.event_name == 'push' && github.ref == 'refs/heads/staging'
+    needs: test
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+      - uses: Swatinem/rust-cache@v2
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+          cache-dependency-path: launcher/pnpm-lock.yaml
+      - run: ./scripts/fetch-innoextract.ps1
+        shell: pwsh
+      - run: pnpm install --frozen-lockfile
+        working-directory: launcher
+      - run: pnpm tauri build --config src-tauri/tauri.test-build.json
+        working-directory: launcher
+      - uses: actions/upload-artifact@v4
+        with:
+          name: test-launcher
+          path: target/release/bundle/nsis/*.exe
