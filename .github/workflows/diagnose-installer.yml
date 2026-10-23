@@ -1,0 +1,40 @@
+name: Diagnose installer scan
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  inspect:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Download the exact unpublished candidate
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        shell: pwsh
+        run: |
+          gh release download v1.0.0 --repo Dragon-Soul-Reborn/dragon-soul-reborn --dir scan --pattern '*.exe'
+          if ($LASTEXITCODE -ne 0) { exit 1 }
+      - name: Extract without executing the candidate
+        shell: pwsh
+        run: |
+          $setup = Get-ChildItem scan/*-setup.exe | Select-Object -First 1
+          & 'C:/Program Files/7-Zip/7z.exe' x $setup.FullName '-oscan/components' -y
+          if ($LASTEXITCODE -ne 0) { exit 1 }
+          $components = @(Get-ChildItem scan/components -Recurse -File | Where-Object { $_.Name -in @('dragon-soul-reborn.exe', 'innoextract.exe') })
+          if ($components.Count -ne 2) { throw 'Expected exactly the launcher and extraction helper.' }
+          $components | Get-FileHash -Algorithm SHA256 | Format-Table Path, Hash -AutoSize
+      - name: Analyse both embedded programs independently
+        env:
+          VT_API_KEY: ${{ secrets.VT_API_KEY }}
+        shell: pwsh
+        run: |
+          $components = @(Get-ChildItem scan/components -Recurse -File | Where-Object { $_.Name -in @('dragon-soul-reborn.exe', 'innoextract.exe') } | Sort-Object Name)
+          node scripts/virustotal-check.mjs $components.FullName
+          if ($LASTEXITCODE -ne 0) { exit 1 }
