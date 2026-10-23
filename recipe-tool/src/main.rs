@@ -40,6 +40,16 @@ enum Cmd {
         min_launcher: String,
         #[arg(long)]
         out: PathBuf,
+        /// Apply the pinned generic-login-error text correction to the client recipe.
+        #[arg(long)]
+        generic_login_errors: bool,
+    },
+    /// Correct the login text in a verified original client (never distributes game bytes).
+    PatchLoginMessage {
+        #[arg(long)]
+        file: PathBuf,
+        #[arg(long)]
+        out: PathBuf,
     },
     /// Full fingerprint check of a game folder against a recipe. Exits 1 on any difference.
     Verify {
@@ -99,6 +109,7 @@ fn main() -> Result<()> {
             game,
             min_launcher,
             out,
+            generic_login_errors,
         } => {
             let parsed: SpecFile =
                 toml::from_str(&fs::read_to_string(&spec)?).context("reading the spec")?;
@@ -113,12 +124,27 @@ fn main() -> Result<()> {
                     overlay_prefix: s.overlay_prefix,
                 })
                 .collect();
-            let recipe = build_recipe(&BuildSpec {
+            let mut recipe = build_recipe(&BuildSpec {
                 game,
                 min_launcher,
                 sources,
-                extracted,
+                extracted: extracted.clone(),
             })?;
+            if generic_login_errors {
+                if semver::Version::parse(&recipe.min_launcher)? < semver::Version::new(1, 0, 1) {
+                    bail!("generic login errors require launcher 1.0.1 or newer");
+                }
+                let entry = recipe
+                    .files
+                    .iter_mut()
+                    .find(|e| e.path.eq_ignore_ascii_case("gameclient_release.exe"))
+                    .context("game client missing from recipe")?;
+                let fixed =
+                    dsr_core::client_login::patch(&fs::read(extracted.join(&entry.from.path))?)?;
+                entry.from.pack = Some(dsr_core::model::Pack::LoginError);
+                entry.size = Some(fixed.len() as u64);
+                entry.sha256 = Some(dsr_core::hash::sha256_bytes(&fixed));
+            }
             recipe.validate(ARCHIVE_HOSTS)?;
             if let Some(parent) = out.parent() {
                 fs::create_dir_all(parent)?;
@@ -132,6 +158,11 @@ fn main() -> Result<()> {
                 recipe.files.len(),
                 recipe.sources.len()
             );
+        }
+        Cmd::PatchLoginMessage { file, out } => {
+            let fixed = dsr_core::client_login::patch(&fs::read(file)?)?;
+            fs::write(&out, fixed)?;
+            println!("login message corrected: {}", out.display());
         }
         Cmd::Verify { recipe, folder } => {
             let recipe = load_recipe(&recipe, ARCHIVE_HOSTS)?;

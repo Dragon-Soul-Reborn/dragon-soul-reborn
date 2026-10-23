@@ -31,6 +31,7 @@ pub fn zip_source(url: &str, bytes: &[u8]) -> Source {
 pub fn exact(path: &str, source: &str, member: &str, raw: &[u8], pack: Option<Pack>) -> FileEntry {
     let bytes = match pack {
         Some(Pack::Aup) => aup::encode(raw),
+        Some(Pack::LoginError) => dsr_core::client_login::patch(raw).expect("verified client"),
         None => raw.to_vec(),
     };
     FileEntry {

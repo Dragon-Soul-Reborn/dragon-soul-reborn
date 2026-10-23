@@ -126,6 +126,7 @@ fn stage(
     };
     let bytes = match e.from.pack {
         Some(Pack::Aup) => aup::encode(&raw),
+        Some(Pack::LoginError) => crate::client_login::patch(&raw)?,
         None => raw,
     };
     let staged = out.join(&e.path);

@@ -105,6 +105,7 @@ pub enum Mode {
 #[serde(rename_all = "lowercase")]
 pub enum Pack {
     Aup,
+    LoginError,
 }
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
@@ -160,7 +161,7 @@ impl Recipe {
         if self.game.trim().is_empty() {
             return Err(invalid("game is empty"));
         }
-        semver::Version::parse(&self.min_launcher).map_err(|_| {
+        let min_launcher = semver::Version::parse(&self.min_launcher).map_err(|_| {
             invalid(format!(
                 "minLauncher {:?} is not a version",
                 self.min_launcher
@@ -182,6 +183,13 @@ impl Recipe {
         }
         let mut seen = BTreeSet::new();
         for e in &self.files {
+            if e.from.pack == Some(Pack::LoginError)
+                && (norm_path(&e.path) != "gameclient_release.exe"
+                    || e.mode != Mode::Exact
+                    || min_launcher < semver::Version::new(1, 0, 1))
+            {
+                return Err(invalid("loginerror is restricted to the verified game client and launcher 1.0.1 or newer"));
+            }
             if !safe_rel(&e.path) || !safe_rel(&e.from.path) {
                 return Err(invalid(format!("unsafe path in entry {:?}", e.path)));
             }
@@ -316,6 +324,19 @@ mod tests {
         let r = valid();
         assert_eq!(r.files[1].mode, Mode::Seed);
         assert_eq!(r.sources["installer"].kind, SourceKind::Inno);
+    }
+
+    #[test]
+    fn login_message_transform_requires_the_client_path_and_capable_launcher() {
+        let mut r = valid();
+        r.files[0].from.pack = Some(Pack::LoginError);
+        assert!(r.validate(ARCHIVE_HOSTS).is_err());
+        r.min_launcher = "1.0.1".into();
+        assert!(r.validate(ARCHIVE_HOSTS).is_err());
+        r.files[0].path = "gameclient_release.exe".into();
+        r.validate(ARCHIVE_HOSTS).unwrap();
+        r.files[0].mode = Mode::Seed;
+        assert!(r.validate(ARCHIVE_HOSTS).is_err());
     }
 
     #[test]

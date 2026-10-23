@@ -1020,7 +1020,7 @@ dependencies = [
 
 [[package]]
 name = "dragon-soul-reborn"
-version = "1.0.0"
+version = "1.0.1"
 dependencies = [
  "dsr-core",
  "log",
@@ -1040,7 +1040,7 @@ dependencies = [
 
 [[package]]
 name = "dsr-core"
-version = "1.0.0"
+version = "1.0.1"
 dependencies = [
  "base64 0.22.1",
  "fs2",
@@ -3223,11 +3223,12 @@ checksum = "20675572f6f24e9e76ef639bc5552774ed45f1c30e2951e1e99c59888861c539"
 
 [[package]]
 name = "recipe-tool"
-version = "1.0.0"
+version = "1.0.1"
 dependencies = [
  "anyhow",
  "clap",
  "dsr-core",
+ "semver",
  "serde",
  "serde_json",
  "tempfile",

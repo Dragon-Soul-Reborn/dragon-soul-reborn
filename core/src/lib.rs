@@ -2,6 +2,7 @@
 //! plain Rust that tests drive directly.
 pub mod apply;
 pub mod aup;
+pub mod client_login;
 pub mod display;
 pub mod extract;
 pub mod feed;
