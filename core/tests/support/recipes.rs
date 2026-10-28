@@ -31,6 +31,8 @@ pub fn zip_source(url: &str, bytes: &[u8]) -> Source {
 pub fn exact(path: &str, source: &str, member: &str, raw: &[u8], pack: Option<Pack>) -> FileEntry {
     let bytes = match pack {
         Some(Pack::Aup) => aup::encode(raw),
+        Some(pack) => dsr_core::musician::transform(pack, raw)
+            .expect("supported source for specialized fixture"),
         None => raw.to_vec(),
     };
     FileEntry {

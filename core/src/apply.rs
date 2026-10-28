@@ -20,6 +20,8 @@ use std::{
 #[derive(Debug, thiserror::Error)]
 pub enum ApplyError {
     #[error(transparent)]
+    Musician(#[from] crate::musician::MusicianError),
+    #[error(transparent)]
     Extract(#[from] ExtractError),
     #[error("{0} came out different from the recipe")]
     BuiltMismatch(String),
@@ -126,6 +128,7 @@ fn stage(
     };
     let bytes = match e.from.pack {
         Some(Pack::Aup) => aup::encode(&raw),
+        Some(pack) => crate::musician::transform(pack, &raw)?,
         None => raw,
     };
     let staged = out.join(&e.path);

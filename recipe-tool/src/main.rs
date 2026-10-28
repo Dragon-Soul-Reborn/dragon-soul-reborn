@@ -8,7 +8,7 @@ use dsr_core::{
     inspect::{inspect, CheckMode, FileStatus},
     model::{Recipe, ServerInfo, SourceKind, ARCHIVE_HOSTS},
     progress::Progress,
-    recipe_build::{build_recipe, BuildSpec, SourceSpec},
+    recipe_build::{build_recipe, build_recipe_with_musician, BuildSpec, SourceSpec},
     routine::Routine,
     signature,
 };
@@ -38,6 +38,9 @@ enum Cmd {
         game: String,
         #[arg(long)]
         min_launcher: String,
+        /// Enable the native Musician class and English descriptions (launcher 1.1.0+).
+        #[arg(long)]
+        musician: bool,
         #[arg(long)]
         out: PathBuf,
     },
@@ -98,6 +101,7 @@ fn main() -> Result<()> {
             extracted,
             game,
             min_launcher,
+            musician,
             out,
         } => {
             let parsed: SpecFile =
@@ -113,7 +117,12 @@ fn main() -> Result<()> {
                     overlay_prefix: s.overlay_prefix,
                 })
                 .collect();
-            let recipe = build_recipe(&BuildSpec {
+            let builder = if musician {
+                build_recipe_with_musician
+            } else {
+                build_recipe
+            };
+            let recipe = builder(&BuildSpec {
                 game,
                 min_launcher,
                 sources,

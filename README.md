@@ -12,6 +12,16 @@ The launcher for **Dragon Soul Reborn**, a free community server for Dragon Soul
 
 Dragon Soul belongs to its rights holders. This project is not affiliated with Giant Network or Neonga.
 
+## Musician
+
+Launcher 1.1.0 adds support for the Musician client update: choose Musician at
+character creation and read its remaining skill and status descriptions in
+English. The update keeps the original skill mechanics and game assets.
+
+The launcher reconstructs the four updated files from the same verified original
+downloads during installation and repair. See [Musician support](docs/musician.md)
+for the versioned recipe and reproducible checks.
+
 ## Building
 
 Windows, Rust (stable, MSVC), Node 22 and pnpm 10:

@@ -44,6 +44,10 @@ pub struct BuildSpec {
 
 #[derive(Debug, thiserror::Error)]
 pub enum BuildError {
+    #[error(transparent)]
+    Musician(#[from] crate::musician::MusicianError),
+    #[error("the Musician recipe needs minLauncher 1.1.0 or later and all four supported assets")]
+    MusicianRecipe,
     #[error("the spec needs exactly one inno source")]
     Installer,
     #[error(transparent)]
@@ -61,6 +65,20 @@ pub fn is_seed(path: &str) -> bool {
 }
 
 pub fn build_recipe(spec: &BuildSpec) -> Result<Recipe, BuildError> {
+    build_recipe_inner(spec, false)
+}
+
+/// Build the native Musician menu and English text into a new versioned recipe.
+/// The default builder remains byte-identical to the original game recipe.
+pub fn build_recipe_with_musician(spec: &BuildSpec) -> Result<Recipe, BuildError> {
+    let minimum = semver::Version::parse(crate::musician::MIN_LAUNCHER).unwrap();
+    if !semver::Version::parse(&spec.min_launcher).is_ok_and(|v| v >= minimum) {
+        return Err(BuildError::MusicianRecipe);
+    }
+    build_recipe_inner(spec, true)
+}
+
+fn build_recipe_inner(spec: &BuildSpec, musician: bool) -> Result<Recipe, BuildError> {
     let mut installers = spec.sources.iter().filter(|s| s.kind == SourceKind::Inno);
     let installer = installers.next().ok_or(BuildError::Installer)?;
     if installers.next().is_some() {
@@ -145,22 +163,40 @@ pub fn build_recipe(spec: &BuildSpec) -> Result<Recipe, BuildError> {
         }
     }
 
+    let mut musician_assets = 0;
     for (i, e) in files.iter_mut().enumerate() {
         if e.mode == Mode::Seed {
             continue;
         }
-        let (size, sha) = match overlaid.get(&i) {
-            Some(raw) => {
-                let bytes = aup::encode(raw);
-                (bytes.len() as u64, hash::sha256_bytes(&bytes))
-            }
-            None => {
-                let p = app.join(&e.path);
-                (fs::metadata(&p)?.len(), hash::sha256_file(&p)?)
+        let (size, sha) = if let Some(pack) = musician
+            .then(|| crate::musician::pack_for(&e.path))
+            .flatten()
+        {
+            let raw = match overlaid.get(&i) {
+                Some(raw) => raw.clone(),
+                None => fs::read(app.join(&e.path))?,
+            };
+            let bytes = crate::musician::transform(pack, &raw)?;
+            e.from.pack = Some(pack);
+            musician_assets += 1;
+            (bytes.len() as u64, hash::sha256_bytes(&bytes))
+        } else {
+            match overlaid.get(&i) {
+                Some(raw) => {
+                    let bytes = aup::encode(raw);
+                    (bytes.len() as u64, hash::sha256_bytes(&bytes))
+                }
+                None => {
+                    let p = app.join(&e.path);
+                    (fs::metadata(&p)?.len(), hash::sha256_file(&p)?)
+                }
             }
         };
         e.size = Some(size);
         e.sha256 = Some(sha);
+    }
+    if musician && musician_assets != 4 {
+        return Err(BuildError::MusicianRecipe);
     }
     files.sort_by_key(|e| norm_path(&e.path));
 
