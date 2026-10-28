@@ -19,7 +19,7 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         shell: pwsh
         run: |
-          gh release download v1.0.0 --repo Dragon-Soul-Reborn/dragon-soul-reborn --dir scan --pattern '*.exe'
+          gh release download v1.1.0 --repo Dragon-Soul-Reborn/dragon-soul-reborn --dir scan --pattern '*.exe'
           if ($LASTEXITCODE -ne 0) { exit 1 }
       - name: Extract without executing the candidate
         shell: pwsh
