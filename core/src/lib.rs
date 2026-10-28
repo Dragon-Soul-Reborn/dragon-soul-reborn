@@ -11,6 +11,7 @@ pub mod hash;
 pub mod inspect;
 pub mod launch;
 pub mod model;
+pub mod musician;
 pub mod paths;
 pub mod plan;
 pub mod progress;

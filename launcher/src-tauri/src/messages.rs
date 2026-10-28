@@ -31,6 +31,7 @@ pub fn routine_message(e: &RoutineError) -> String {
         RoutineError::Apply(ApplyError::Extract(ExtractError::Spawn(_))) => "The launcher's unpacker is missing. Reinstall the launcher.".into(),
         RoutineError::Apply(ApplyError::Extract(e)) => format!("Unpacking failed: {e}"),
         RoutineError::Apply(ApplyError::BuiltMismatch(p)) => format!("{p} came out different from what this game version expects. Please report this."),
+        RoutineError::Apply(ApplyError::Musician(_)) => "The Musician update couldn't be verified. Please report this so we can check the game files.".into(),
     }
 }
 

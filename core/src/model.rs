@@ -105,6 +105,14 @@ pub enum Mode {
 #[serde(rename_all = "lowercase")]
 pub enum Pack {
     Aup,
+    #[serde(rename = "musician-menu")]
+    MusicianMenu,
+    #[serde(rename = "musician-skills")]
+    MusicianSkills,
+    #[serde(rename = "musician-buffs")]
+    MusicianBuffs,
+    #[serde(rename = "musician-creation")]
+    MusicianCreation,
 }
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
@@ -182,6 +190,16 @@ impl Recipe {
         }
         let mut seen = BTreeSet::new();
         for e in &self.files {
+            if let Some(pack) = e.from.pack.filter(|p| crate::musician::is_musician(*p)) {
+                let minimum = semver::Version::parse(crate::musician::MIN_LAUNCHER).unwrap();
+                let version = semver::Version::parse(&self.min_launcher).unwrap();
+                if crate::musician::pack_for(&e.path) != Some(pack)
+                    || e.mode != Mode::Exact
+                    || version < minimum
+                {
+                    return Err(invalid("Musician transforms require their exact target path and minLauncher 1.1.0 or later"));
+                }
+            }
             if !safe_rel(&e.path) || !safe_rel(&e.from.path) {
                 return Err(invalid(format!("unsafe path in entry {:?}", e.path)));
             }
@@ -316,6 +334,24 @@ mod tests {
         let r = valid();
         assert_eq!(r.files[1].mode, Mode::Seed);
         assert_eq!(r.sources["installer"].kind, SourceKind::Inno);
+    }
+
+    #[test]
+    fn musician_transforms_are_bound_to_path_mode_and_launcher_version() {
+        let mut r = valid();
+        r.files[0].path = "gameclient_release.exe".into();
+        r.files[0].from.pack = Some(Pack::MusicianMenu);
+        assert!(r.validate(ARCHIVE_HOSTS).is_err());
+        r.min_launcher = "1.1.0".into();
+        assert!(r.validate(ARCHIVE_HOSTS).is_ok());
+        r.files[0].mode = Mode::Seed;
+        assert!(r.validate(ARCHIVE_HOSTS).is_err());
+        r.files[0].mode = Mode::Exact;
+        r.files[0].path = "unrelated.exe".into();
+        assert!(r.validate(ARCHIVE_HOSTS).is_err());
+        r.files[0].path = "gameclient_release.exe".into();
+        r.files[0].from.pack = Some(Pack::MusicianSkills);
+        assert!(r.validate(ARCHIVE_HOSTS).is_err());
     }
 
     #[test]

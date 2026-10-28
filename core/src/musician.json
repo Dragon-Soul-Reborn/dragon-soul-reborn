@@ -1,0 +1,530 @@
+{
+  "skills": [
+    {
+      "id": "9030",
+      "rank": "5",
+      "text": "Deals 624 points of Lightning damage to surrounding enemies.#BR#*Applies No Escape, reducing Evasion by 15% for 10 seconds and movement speed by 50% for 5 seconds.#BR#*Grants surrounding allies Ambush, increasing Accuracy by 15%."
+    },
+    {
+      "id": "9030",
+      "rank": "6",
+      "text": "Deals 650 points of Lightning damage to surrounding enemies.#BR#*Applies No Escape, reducing Evasion by 15% for 10 seconds and movement speed by 50% for 5 seconds.#BR#*Grants surrounding allies Ambush, increasing Accuracy by 15%."
+    },
+    {
+      "id": "9030",
+      "rank": "7",
+      "text": "Deals 676 points of Lightning damage to surrounding enemies.#BR#*Applies No Escape, reducing Evasion by 15% for 10 seconds and movement speed by 50% for 5 seconds.#BR#*Grants surrounding allies Ambush, increasing Accuracy by 15%."
+    },
+    {
+      "id": "9030",
+      "rank": "8",
+      "text": "Deals 702 points of Lightning damage to surrounding enemies.#BR#*Applies No Escape, reducing Evasion by 15% for 10 seconds and movement speed by 50% for 5 seconds.#BR#*Grants surrounding allies Ambush, increasing Accuracy by 15%."
+    },
+    {
+      "id": "9042",
+      "rank": "1",
+      "text": "Restores 1018 HP to up to 5 nearby allies and grants Reinforce, increasing Strength, Agility, Health and Intelligence by 10% for 10 seconds."
+    },
+    {
+      "id": "9042",
+      "rank": "2",
+      "text": "Restores 1058 HP to up to 5 nearby allies and grants Reinforce, increasing Strength, Agility, Health and Intelligence by 10% for 10 seconds."
+    },
+    {
+      "id": "9042",
+      "rank": "3",
+      "text": "Restores 1100 HP to up to 5 nearby allies and grants Reinforce, increasing Strength, Agility, Health and Intelligence by 10% for 10 seconds."
+    },
+    {
+      "id": "9042",
+      "rank": "4",
+      "text": "Restores 1140 HP to up to 5 nearby allies and grants Reinforce, increasing Strength, Agility, Health and Intelligence by 10% for 10 seconds."
+    },
+    {
+      "id": "9042",
+      "rank": "5",
+      "text": "Restores 1923 HP to up to 5 nearby allies and grants Reinforce, increasing Strength, Agility, Health and Intelligence by 10% for 10 seconds."
+    },
+    {
+      "id": "9042",
+      "rank": "6",
+      "text": "Restores 1964 HP to up to 5 nearby allies and grants Reinforce, increasing Strength, Agility, Health and Intelligence by 10% for 10 seconds."
+    },
+    {
+      "id": "9042",
+      "rank": "7",
+      "text": "Restores 2005 HP to up to 5 nearby allies and grants Reinforce, increasing Strength, Agility, Health and Intelligence by 10% for 10 seconds."
+    },
+    {
+      "id": "9042",
+      "rank": "8",
+      "text": "Restores 2046 HP to up to 5 nearby allies and grants Reinforce, increasing Strength, Agility, Health and Intelligence by 10% for 10 seconds."
+    },
+    {
+      "id": "9042",
+      "rank": "9",
+      "text": "Restores 2087 HP to up to 5 nearby allies and grants Reinforce, increasing Strength, Agility, Health and Intelligence by 10% for 10 seconds."
+    },
+    {
+      "id": "9042",
+      "rank": "10",
+      "text": "Restores 3075 HP to up to 5 nearby allies and grants Reinforce, increasing Strength, Agility, Health and Intelligence by 10% for 10 seconds."
+    },
+    {
+      "id": "9043",
+      "rank": "1",
+      "text": "Deals {$AMin} to {$AMax} points of Lightning damage and applies Lightning Strike for 10 seconds. Allies pursuing the affected target gain 30% movement speed."
+    },
+    {
+      "id": "9045",
+      "rank": "1",
+      "text": "Strikes targets in the selected area once per second for 10 seconds, dealing {$AMax} points of Lightning damage per strike. Each strike has a 40% chance to paralyze its target for 1 second."
+    },
+    {
+      "id": "9045",
+      "rank": "2",
+      "text": "Strikes targets in the selected area once per second for 10 seconds, dealing {$AMax} points of Lightning damage per strike. Each strike has a 44% chance to paralyze its target for 1 second."
+    },
+    {
+      "id": "9045",
+      "rank": "3",
+      "text": "Strikes targets in the selected area once per second for 10 seconds, dealing {$AMax} points of Lightning damage per strike. Each strike has a 48% chance to paralyze its target for 1 second."
+    },
+    {
+      "id": "9045",
+      "rank": "4",
+      "text": "Strikes targets in the selected area once per second for 10 seconds, dealing {$AMax} points of Lightning damage per strike. Each strike has a 52% chance to paralyze its target for 1 second."
+    },
+    {
+      "id": "9045",
+      "rank": "5",
+      "text": "Strikes targets in the selected area once per second for 10 seconds, dealing {$AMax} points of Lightning damage per strike. Each strike has a 60% chance to paralyze its target for 1 second."
+    },
+    {
+      "id": "9045",
+      "rank": "6",
+      "text": "Strikes targets in the selected area once per second for 10 seconds, dealing {$AMax} points of Lightning damage per strike. Each strike has a 64% chance to paralyze its target for 1 second."
+    },
+    {
+      "id": "9045",
+      "rank": "7",
+      "text": "Strikes targets in the selected area once per second for 10 seconds, dealing {$AMax} points of Lightning damage per strike. Each strike has a 68% chance to paralyze its target for 1 second."
+    },
+    {
+      "id": "9045",
+      "rank": "8",
+      "text": "Strikes targets in the selected area once per second for 10 seconds, dealing {$AMax} points of Lightning damage per strike. Each strike has a 72% chance to paralyze its target for 1 second."
+    },
+    {
+      "id": "9045",
+      "rank": "9",
+      "text": "Strikes targets in the selected area once per second for 10 seconds, dealing {$AMax} points of Lightning damage per strike. Each strike has a 76% chance to paralyze its target for 1 second."
+    },
+    {
+      "id": "9045",
+      "rank": "10",
+      "text": "Strikes targets in the selected area once per second for 10 seconds, dealing {$AMax} points of Lightning damage per strike. Each strike has a 84% chance to paralyze its target for 1 second."
+    },
+    {
+      "id": "9046",
+      "rank": "1",
+      "text": "Grants Flower Cloak for 30 seconds, converting 20% of incoming damage into MP consumption."
+    },
+    {
+      "id": "9046",
+      "rank": "2",
+      "text": "Grants Flower Cloak for 30 seconds, converting 22% of incoming damage into MP consumption."
+    },
+    {
+      "id": "9046",
+      "rank": "3",
+      "text": "Grants Flower Cloak for 30 seconds, converting 24% of incoming damage into MP consumption."
+    },
+    {
+      "id": "9046",
+      "rank": "4",
+      "text": "Grants Flower Cloak for 30 seconds, converting 26% of incoming damage into MP consumption."
+    },
+    {
+      "id": "9046",
+      "rank": "5",
+      "text": "Grants Flower Cloak for 30 seconds, converting 30% of incoming damage into MP consumption."
+    },
+    {
+      "id": "9047",
+      "rank": "1",
+      "text": "Grants an ally Cloud Cloak for 30 seconds. If the target's HP falls below 35%, restores 382 HP."
+    },
+    {
+      "id": "9047",
+      "rank": "2",
+      "text": "Grants an ally Cloud Cloak for 30 seconds. If the target's HP falls below 35%, restores 484 HP."
+    },
+    {
+      "id": "9047",
+      "rank": "3",
+      "text": "Grants an ally Cloud Cloak for 30 seconds. If the target's HP falls below 35%, restores 587 HP."
+    },
+    {
+      "id": "9047",
+      "rank": "4",
+      "text": "Grants an ally Cloud Cloak for 30 seconds. If the target's HP falls below 35%, restores 689 HP."
+    },
+    {
+      "id": "9047",
+      "rank": "5",
+      "text": "Grants an ally Cloud Cloak for 30 seconds. If the target's HP falls below 35%, restores 1419 HP."
+    },
+    {
+      "id": "9047",
+      "rank": "6",
+      "text": "Grants an ally Cloud Cloak for 30 seconds. If the target's HP falls below 35%, restores 1521 HP."
+    },
+    {
+      "id": "9047",
+      "rank": "7",
+      "text": "Grants an ally Cloud Cloak for 30 seconds. If the target's HP falls below 35%, restores 1623 HP."
+    },
+    {
+      "id": "9047",
+      "rank": "8",
+      "text": "Grants an ally Cloud Cloak for 30 seconds. If the target's HP falls below 35%, restores 1726 HP."
+    },
+    {
+      "id": "9047",
+      "rank": "9",
+      "text": "Grants an ally Cloud Cloak for 30 seconds. If the target's HP falls below 35%, restores 1828 HP."
+    },
+    {
+      "id": "9047",
+      "rank": "10",
+      "text": "Grants an ally Cloud Cloak for 30 seconds. If the target's HP falls below 35%, restores 3070 HP."
+    },
+    {
+      "id": "9047",
+      "rank": "11",
+      "text": "Grants an ally Cloud Cloak for 30 seconds. If the target's HP falls below 35%, restores 3204 HP."
+    },
+    {
+      "id": "9047",
+      "rank": "12",
+      "text": "Grants an ally Cloud Cloak for 30 seconds. If the target's HP falls below 35%, restores 3332 HP."
+    },
+    {
+      "id": "9047",
+      "rank": "13",
+      "text": "Grants an ally Cloud Cloak for 30 seconds. If the target's HP falls below 35%, restores 3460 HP."
+    },
+    {
+      "id": "9047",
+      "rank": "14",
+      "text": "Grants an ally Cloud Cloak for 30 seconds. If the target's HP falls below 35%, restores 3588 HP."
+    },
+    {
+      "id": "9047",
+      "rank": "15",
+      "text": "Grants an ally Cloud Cloak for 30 seconds. If the target's HP falls below 35%, restores 5476 HP."
+    },
+    {
+      "id": "9047",
+      "rank": "16",
+      "text": "Grants an ally Cloud Cloak for 30 seconds. If the target's HP falls below 35%, restores 5604 HP."
+    },
+    {
+      "id": "9047",
+      "rank": "17",
+      "text": "Grants an ally Cloud Cloak for 30 seconds. If the target's HP falls below 35%, restores 5732 HP."
+    },
+    {
+      "id": "9047",
+      "rank": "18",
+      "text": "Grants an ally Cloud Cloak for 30 seconds. If the target's HP falls below 35%, restores 5860 HP."
+    },
+    {
+      "id": "9047",
+      "rank": "19",
+      "text": "Grants an ally Cloud Cloak for 30 seconds. If the target's HP falls below 35%, restores 5988 HP."
+    },
+    {
+      "id": "9047",
+      "rank": "20",
+      "text": "Grants an ally Cloud Cloak for 30 seconds. If the target's HP falls below 35%, restores 8516 HP."
+    }
+  ],
+  "buffs": [
+    {
+      "id": "903",
+      "rank": "1",
+      "text": "Reduces Attack by 10% for 10 seconds."
+    },
+    {
+      "id": "903",
+      "rank": "2",
+      "text": "Reduces Attack by 15% for 10 seconds."
+    },
+    {
+      "id": "903",
+      "rank": "3",
+      "text": "Reduces Attack by 20% for 10 seconds."
+    },
+    {
+      "id": "924",
+      "rank": "1",
+      "text": "Emits a healing wave to nearby allies every 2 seconds for 10 seconds."
+    },
+    {
+      "id": "924",
+      "rank": "2",
+      "text": "Emits a healing wave to nearby allies every 2 seconds for 10 seconds."
+    },
+    {
+      "id": "924",
+      "rank": "3",
+      "text": "Emits a healing wave to nearby allies every 2 seconds for 10 seconds."
+    },
+    {
+      "id": "924",
+      "rank": "4",
+      "text": "Emits a healing wave to nearby allies every 2 seconds for 10 seconds."
+    },
+    {
+      "id": "924",
+      "rank": "5",
+      "text": "Emits a healing wave to nearby allies every 2 seconds for 10 seconds."
+    },
+    {
+      "id": "924",
+      "rank": "6",
+      "text": "Emits a healing wave to nearby allies every 2 seconds for 10 seconds."
+    },
+    {
+      "id": "924",
+      "rank": "7",
+      "text": "Emits a healing wave to nearby allies every 2 seconds for 10 seconds."
+    },
+    {
+      "id": "924",
+      "rank": "8",
+      "text": "Emits a healing wave to nearby allies every 2 seconds for 10 seconds."
+    },
+    {
+      "id": "924",
+      "rank": "9",
+      "text": "Emits a healing wave to nearby allies every 2 seconds for 10 seconds."
+    },
+    {
+      "id": "924",
+      "rank": "10",
+      "text": "Emits a healing wave to nearby allies every 2 seconds for 10 seconds."
+    },
+    {
+      "id": "924",
+      "rank": "11",
+      "text": "Emits a healing wave to nearby allies every 2 seconds for 10 seconds."
+    },
+    {
+      "id": "924",
+      "rank": "12",
+      "text": "Emits a healing wave to nearby allies every 2 seconds for 10 seconds."
+    },
+    {
+      "id": "924",
+      "rank": "13",
+      "text": "Emits a healing wave to nearby allies every 2 seconds for 10 seconds."
+    },
+    {
+      "id": "924",
+      "rank": "14",
+      "text": "Emits a healing wave to nearby allies every 2 seconds for 10 seconds."
+    },
+    {
+      "id": "924",
+      "rank": "15",
+      "text": "Emits a healing wave to nearby allies every 2 seconds for 10 seconds."
+    },
+    {
+      "id": "924",
+      "rank": "16",
+      "text": "Emits a healing wave to nearby allies every 2 seconds for 10 seconds."
+    },
+    {
+      "id": "924",
+      "rank": "17",
+      "text": "Emits a healing wave to nearby allies every 2 seconds for 10 seconds."
+    },
+    {
+      "id": "924",
+      "rank": "18",
+      "text": "Emits a healing wave to nearby allies every 2 seconds for 10 seconds."
+    },
+    {
+      "id": "924",
+      "rank": "19",
+      "text": "Emits a healing wave to nearby allies every 2 seconds for 10 seconds."
+    },
+    {
+      "id": "924",
+      "rank": "20",
+      "text": "Emits a healing wave to nearby allies every 2 seconds for 10 seconds."
+    },
+    {
+      "id": "930",
+      "rank": "1",
+      "text": "Reduces Evasion by 10% for 10 seconds."
+    },
+    {
+      "id": "930",
+      "rank": "2",
+      "text": "Reduces Evasion by 15% for 10 seconds."
+    },
+    {
+      "id": "930",
+      "rank": "3",
+      "text": "Reduces Evasion by 20% for 10 seconds."
+    },
+    {
+      "id": "931",
+      "rank": "1",
+      "text": "Increases Accuracy by 10% for 10 seconds."
+    },
+    {
+      "id": "931",
+      "rank": "2",
+      "text": "Increases Accuracy by 15% for 10 seconds."
+    },
+    {
+      "id": "931",
+      "rank": "3",
+      "text": "Increases Accuracy by 20% for 10 seconds."
+    },
+    {
+      "id": "935",
+      "rank": "1",
+      "text": "Increases movement speed by 30% for 15 seconds."
+    },
+    {
+      "id": "935",
+      "rank": "2",
+      "text": "Increases movement speed by 45% for 15 seconds."
+    },
+    {
+      "id": "935",
+      "rank": "3",
+      "text": "Increases movement speed by 60% for 15 seconds."
+    },
+    {
+      "id": "940",
+      "rank": "1",
+      "text": "Restores 3120 HP every 1 second for 10 seconds."
+    },
+    {
+      "id": "940",
+      "rank": "2",
+      "text": "Restores 3220 HP every 1 second for 10 seconds."
+    },
+    {
+      "id": "940",
+      "rank": "3",
+      "text": "Restores 3320 HP every 1 second for 10 seconds."
+    },
+    {
+      "id": "940",
+      "rank": "4",
+      "text": "Restores 3420 HP every 1 second for 10 seconds."
+    },
+    {
+      "id": "940",
+      "rank": "5",
+      "text": "Restores 4971 HP every 1 second for 10 seconds."
+    },
+    {
+      "id": "940",
+      "rank": "6",
+      "text": "Restores 5071 HP every 1 second for 10 seconds."
+    },
+    {
+      "id": "940",
+      "rank": "7",
+      "text": "Restores 5171 HP every 1 second for 10 seconds."
+    },
+    {
+      "id": "940",
+      "rank": "8",
+      "text": "Restores 5271 HP every 1 second for 10 seconds."
+    },
+    {
+      "id": "940",
+      "rank": "9",
+      "text": "Restores 5371 HP every 1 second for 10 seconds."
+    },
+    {
+      "id": "940",
+      "rank": "10",
+      "text": "Restores 7422 HP every 1 second for 10 seconds."
+    },
+    {
+      "id": "942",
+      "rank": "1",
+      "text": "Increases Strength, Agility, Health and Intelligence by 10% for 10 seconds."
+    },
+    {
+      "id": "946",
+      "rank": "1",
+      "text": "Converts 20% of incoming damage into MP consumption for 30 seconds."
+    },
+    {
+      "id": "946",
+      "rank": "2",
+      "text": "Converts 22% of incoming damage into MP consumption for 30 seconds."
+    },
+    {
+      "id": "946",
+      "rank": "3",
+      "text": "Converts 24% of incoming damage into MP consumption for 30 seconds."
+    },
+    {
+      "id": "946",
+      "rank": "4",
+      "text": "Converts 26% of incoming damage into MP consumption for 30 seconds."
+    },
+    {
+      "id": "946",
+      "rank": "5",
+      "text": "Converts 30% of incoming damage into MP consumption for 30 seconds."
+    }
+  ],
+  "assets": [
+    {
+      "kind": "menu",
+      "path": "gameclient_release.exe",
+      "input_sha256": "af1d0fa718f55a17ea8c05632bb92ca71c0ff003daed4e0901a128c546910991",
+      "raw_sha256": "af1d0fa718f55a17ea8c05632bb92ca71c0ff003daed4e0901a128c546910991",
+      "output_sha256": "a452c4bf810bfcbc5f08cb20a3d23de54b9ddf51c910b1cd9f19e3e6628da44a",
+      "output_size": 4841472
+    },
+    {
+      "kind": "skills",
+      "path": "data/skill/nskilldesc05.skill.aup",
+      "input_sha256": "eb6b28c3d21903522d2bc8e2bb08d19d20eb1fd7baf37a57b2e40ead5581131f",
+      "raw_sha256": "33d50f86f56221a89d6be08b40164b2805e9eb82d154535b9b592489186b30a5",
+      "output_sha256": "c03ea66f01a123122f2839fa2d50bee4d1155288bcf51edb95a02d8652d50746",
+      "output_size": 221081
+    },
+    {
+      "kind": "buffs",
+      "path": "data/nbuffdesc01.xml.aup",
+      "input_sha256": "19d735211c51d8eb3008bf2ebcddaaef64c55ec284a2b5cb8194ca2655172120",
+      "raw_sha256": "deb03d8fbd29d6ca838bc641423b35311741f33e2d951559a85e7d5646299b35",
+      "output_sha256": "6793a12ca4d63817e3e2eb9f8827f7e3aea77ba7c34e702ed88feffe9c8bf2b1",
+      "output_size": 115134
+    },
+    {
+      "kind": "creation",
+      "path": "data/createroletext.xml.aup",
+      "input_sha256": "b265387bcc542ab68e7245bd7ab9d9e35ba3c5ff190cda310a2cca836ec4fbbb",
+      "raw_sha256": "7c6fb94b8b6af0ab1af63fcfa5cb3e7ce97455ca21a1edc413b8a3e161b32f66",
+      "output_sha256": "764a4445358022040628176015c278428df9bcdf8a53aaaea8cbe594fa01df20",
+      "output_size": 2311
+    }
+  ]
+}
