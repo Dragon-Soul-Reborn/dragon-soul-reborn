@@ -3,5 +3,5 @@
   "issued": "2026-10-21T00:00:00Z",
   "server": { "ip": "85.190.115.184", "port": 7000, "zone": 1, "gametype": 1, "nettype": 0 },
   "message": "Welcome to Dragon Soul Reborn.",
-  "game": "0.27-r1"
+  "game": "0.27-r3"
 }
