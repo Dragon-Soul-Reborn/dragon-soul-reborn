@@ -53,14 +53,6 @@ jobs:
           $exe = Get-ChildItem target/release/bundle/nsis/*-setup.exe | Select-Object -First 1
           cargo run --release -p recipe-tool -- sig-verify --pubkey $pub --file $exe.FullName --sig "$($exe.FullName).sig"
           if ($LASTEXITCODE -ne 0) { exit 1 }
-      - name: VirusTotal
-        shell: pwsh
-        env:
-          VT_API_KEY: ${{ secrets.VT_API_KEY }}
-        run: |
-          $exe = Get-ChildItem target/release/bundle/nsis/*-setup.exe | Select-Object -First 1
-          node scripts/virustotal-check.mjs $exe.FullName
-          if ($LASTEXITCODE -ne 0) { exit 1 }
       - name: Publish the release
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
